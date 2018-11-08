@@ -54,6 +54,19 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const post = await Post.findOne({ _id: req.params.id })
+    res.status(200).json(post)
+  } catch (e) {
+    if (e.statusCode !== undefined) {
+      res.status(e.statusCode).json(e)
+    } else {
+      res.status(500).json(e)
+    }
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newPost = await Post({

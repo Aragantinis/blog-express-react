@@ -59,6 +59,19 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const author = await Author.findOne({ _id: req.params.id })
+    res.status(200).json(author)
+  } catch (e) {
+    if (e.statusCode !== undefined) {
+      res.status(e.statusCode).json(e)
+    } else {
+      res.status(500).json(e)
+    }
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newAuthor = await Author({
