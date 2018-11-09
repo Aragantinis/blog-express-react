@@ -32,6 +32,8 @@ router.get('/', async (req, res, next) => {
     }
 
     const posts = await Post.find()
+      .populate('authors')
+      .populate({ path: 'comments', populate: { path: 'user' } })
       .skip(page * per_page)
       .limit(per_page)
     res
@@ -57,6 +59,8 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const post = await Post.findOne({ _id: req.params.id })
+      .populate('authors')
+      .populate({ path: 'comments', populate: { path: 'user' } })
     res.status(200).json(post)
   } catch (e) {
     if (e.statusCode !== undefined) {
@@ -73,10 +77,13 @@ router.post('/', async (req, res, next) => {
       titulo: req.body.titulo,
       subtitulo: req.body.subtitulo,
       content: req.body.content,
-      author: [req.body.author],
+      author: req.body.author,
     })
     await newPost.save()
-    res.status(200).json({ data: 'saved successfully', received: newPost })
+
+    res
+      .status(200)
+      .json(await Post.find({ _id: newPost._id }).populate('author'))
   } catch (e) {
     next(e)
   }

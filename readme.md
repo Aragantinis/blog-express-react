@@ -13,8 +13,11 @@ This idea of this project is to make a REST API to a blog and a React app as a f
 - [ ] Start bootstraping React fron-end
 - [ ] Make editing possible
 - [ ] Add JWT auth so that only post and comment authors and delete
-- [ ] Create permalinks (or slugs) so that posts have a unique way to be accessed from the front-end
 - [ ] Finish creating all routes
+- [x] Improved seeder so that now it creates all fake data to work with (without password because we don't have auth yet)
+- [x] Populated lists with details from posts and comments
+- [x] Create permalinks (or slugs) so that posts have a unique way to be accessed from the front-end
+- [x] Added User model so that comments can be referenced to this users
 - [x] Added rate-limit to the API (I'm using github parameters - 5000 req/hour)
 - [x] Created a seeder file on server to generate random data for testing purpose (only added authors yet)
 - [x] Added pagination do comments and authors
